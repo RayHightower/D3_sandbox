@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mexican States Population Bar Chart</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <h1>Mexican States Population Bar Chart</h1>
+  <div id="chart"></div>
+
+  <script>
+    d3.json("mexican_states_population.json").then(function(data) {
+      var svg = d3.select("#chart")
+        .append("svg")
+        .attr("width", 800)
+        .attr("height", 500);
+
+      var x = d3.scaleLinear()
+        .domain([0, d3.max(data, function(d) { return d.population; })])
+        .range([0, 700]);
+
+      svg.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("rect")
+        .attr("x", 0)
+        .attr("y", function(d, i) { return i * 25; })
+        .attr("width", function(d) { return x(d.population); })
+        .attr("height", 20);
+
+      svg.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text")
+        .text(function(d) { return d.state; })
+        .attr("x", 5)
+        .attr("y", function(d, i) { return i * 25 + 15; });
+    });
+  </script>
+</body>
+</html>

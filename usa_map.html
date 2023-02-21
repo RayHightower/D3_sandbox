@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Map of the USA using D3.js</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+      /* Add CSS styles for the map */
+      path {
+        stroke: #fff;
+        stroke-width: 1;
+        fill: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      // Set the width and height of the map
+      var width = 960,
+        height = 600;
+
+      // Define the projection of the map
+      var projection = d3.geoAlbersUsa()
+        .translate([width / 2, height / 2])
+        .scale([1200]);
+
+      // Define the path of the map
+      var path = d3.geoPath()
+        .projection(projection);
+
+      // Create an SVG element for the map
+      var svg = d3.select("#map").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      // Load the geojson data for the USA map
+      d3.json("https://d3js.org/us-10m.v1.json").then(function (us) {
+        // Draw the map
+        svg.append("g")
+          .attr("class", "states")
+          .selectAll("path")
+          .data(topojson.feature(us, us.objects.states).features)
+          .enter()
+          .append("path")
+          .attr("d", path);
+      });
+    </script>
+  </body>
+</html>
