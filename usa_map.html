@@ -34,7 +34,8 @@
         .attr("height", height);
 
       // Load the geojson data for the USA map
-      d3.json("https://d3js.org/us-10m.v1.json").then(function (us) {
+      // d3.json("https://d3js.org/us-10m.v1.json").then(function (us) {
+      d3.json("us-10m.v1.json").then(function (us) {
         // Draw the map
         svg.append("g")
           .attr("class", "states")
