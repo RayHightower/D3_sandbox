@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Arizona Map</title>
+  <script src="./d3.v7.min.js"></script>
+</head>
+<body>
+  <script>
+    // Set the dimensions of the SVG
+    var width = 800;
+    var height = 600;
+
+    // Create the SVG container
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    // Define the projection
+    var projection = d3.geoAlbers()
+      .center([0, 34])
+      .rotate([111.5, 0])
+      .parallels([29.5, 39.5])
+      .scale(7000)
+      .translate([width / 2, height / 2]);
+
+    // Define the path
+    var path = d3.geoPath()
+      .projection(projection);
+
+    // Load the GeoJSON data for Arizona
+    d3.json("arizona.json").then(function(arizona) {
+
+      // Draw the state boundary
+      svg.append("path")
+        .datum(arizona)
+        .attr("d", path)
+        .attr("fill", "lightgray")
+        .attr("stroke", "black")
+        .attr("stroke-width", 1);
+
+    });
+  </script>
+</body>
+</html>
