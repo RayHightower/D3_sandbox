@@ -13,4 +13,4 @@ svg.selectAll("rect")
   .attr("y", (d) => 300 - 10 * d)
   .attr("width", 50)
   .attr("height", (d) => d * 10)
-  .attr("fill", "steelblue");
+  .attr("fill", "gold");
